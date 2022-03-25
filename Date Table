@@ -1,0 +1,97 @@
+Date = 
+VAR START_DATE =
+           MIN(SERVICE_CONTRACTS[ContractStartDate])
+VAR FirstDateoftheYear =
+    DATE( YEAR( START_DATE ), 1, 1 )
+VAR Finish_DATE =
+     MAX(SERVICE_SALES_LINES[IncidentDate])
+VAR LastDateoftheYear =
+    DATE( YEAR( Finish_DATE ), 12, 31 )
+VAR Result =
+    ADDCOLUMNS(
+        CALENDAR(
+            FirstDateoftheYear,
+            LastDateoftheYear
+        ),
+        "Month Name",
+            FORMAT(
+                [Date],
+                "MMM"
+            ),
+        "Month Sort", MONTH( [Date] ),
+        "Year", YEAR( [Date] ),
+        "Month Year",
+            FORMAT(
+                [Date],
+                "MMM"
+            ) & "-"
+                & YEAR( [Date] ),
+        "Month Year Sort",
+            (
+                (
+                    YEAR( [Date] )
+                ) *100
+            
+                + MONTH( [Date] )),
+/*         "Day Name",
+            FORMAT(
+                [Date],
+                "DDD"
+            ), */
+/*         "Day Number Monthly ",
+            FORMAT(
+                [Date],
+                "DD"
+            ), */
+/*         "Day Number Week", WEEKDAY( [Date] ), */
+        //"Working Day",IF(
+        //	WEEKDAY([Date])=3,"Working,"Not Working"
+        "Quarter Number ", QUARTER( [Date] ),
+        "Quarter Name",
+            "Q"
+                & FORMAT(
+                    [Date],
+                    "Q"
+                ),
+        "Quarter-Year",
+            "Q"
+                & QUARTER( [Date] ) & "-"
+                & YEAR( [Date] ),
+/*         "DayofMonth",
+            FORMAT(
+                [Date],
+                "DD"
+            ), */
+        "WeekNum",
+            WEEKNUM(
+                [Date],
+                1
+            ),
+/*         "Day",
+            FORMAT(
+                [Date],
+                "DD"
+            ) & " ("
+                & FORMAT(
+                    [Date],
+                    "ddd"
+                ) & ")", */
+        "WorkingDays",
+            IF(
+                FORMAT(
+                    [Date],
+                    "dddd"
+                ) = "Friday",
+                0,
+                IF(
+                    FORMAT(
+                        [Date],
+                        "YYYYMMDD"
+                    ) = "20200101",
+                    0,
+                    1
+                )
+            )
+    )
+RETURN
+    Result
