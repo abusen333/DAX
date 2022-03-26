@@ -1,0 +1,40 @@
+Time = 
+VAR _series =
+   GENERATESERIES(
+        1,
+        1440 ,
+        1
+    )
+VAR _time =
+    ADDCOLUMNS(
+        _series,
+        "TimeandDay", TIME( 0, [value], 0 )
+    )
+VAR Result =
+    ADDCOLUMNS(
+        _time,
+        "TimeKey",
+            FORMAT(
+                [TimeandDay],
+                "hhmm"
+            ),
+        "Actual Time",
+            FORMAT(
+                [TimeandDay],
+                "HH:MM AM/PM"
+            ),
+        "Hour", HOUR( [TimeandDay] ),
+        "Hour Extended",
+            FORMAT(
+                [TimeandDay],
+                "H AM/PM"
+            ),
+        "Minute", MINUTE( [TimeandDay] ),
+        "AM/PM",
+            FORMAT(
+                [TimeandDay],
+                "AMPM"
+            )
+    )
+RETURN
+    Result
