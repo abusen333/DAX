@@ -1,0 +1,6 @@
+
+   ## DISTINCTCOUNT       
+      # Customers := DISTINCTCOUNT ( Sales[CustomerKey] )   =  COUNTROWS ( DISTINCT ( Sales[CustomerKey] ) )
+
+      # Customers SUMX :=
+                SUMX ( DISTINCT ( Sales[CustomerKey] ), 1 )
