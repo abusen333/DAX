@@ -4,3 +4,19 @@
 
       # Customers SUMX :=
                 SUMX ( DISTINCT ( Sales[CustomerKey] ), 1 )
+   
+   
+   ## Count Duplicated values in Column
+   
+   Duplicated IDs = 
+      VAR CurrentValue =
+                       Table[ID]
+      VAR Result = 
+                  COUNTROWS(
+                              FILTER(
+                                      Table,
+                                      Table[ID] = CurrentValue
+                              )
+                  )
+      Return 
+      Result
