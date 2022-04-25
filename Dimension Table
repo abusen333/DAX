@@ -1,0 +1,14 @@
+Customer Is Bank = 
+VAR
+ NBD_Check= 
+        SEARCH("NBD",[CUSTOMER_NAME],1,BLANK()) <> BLANK()
+VAR 
+    Bank_Check= 
+        SEARCH("Bank",[CUSTOMER_NAME],1,BLANK()) <> BLANK()
+VAR 
+    Result =
+SWITCH( True(),
+   OR(  NBD_Check , Bank_Check) = TRUE() , "Bank","Not Bank")
+
+Return
+Result
