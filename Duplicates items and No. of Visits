@@ -1,0 +1,54 @@
+No. of JC for the same Item for the same item =
+VAR JC = 'Table'[IncidentDate]
+VAR _X = 'Table'[ServiceItemDescription]
+VAR _Item = 'Table'[Item]
+VAR theCarsWeneed =
+    FILTER (
+        ALL ( 'Table' ),
+        'Table'[ServiceItemDescription] = _X
+            && 'Table'[Item] = _Item
+    )
+VAR Result =
+    CALCULATE (
+        RANK.EQ (
+            JC,
+            'Table'[IncidentDate],
+            ASC
+        ),
+        theCarsWeneed
+    )
+RETURN
+    Result
+
+
+------------------------------------------------
+
+
+
+
+
+Duration since Last visit for the same item and JC =
+--VAR _Item =VALUE( 'Table'[No. of JC for the same Item])
+VAR TablePerCar =
+    TOPN (
+        1,
+        FILTER (
+            'Table',
+            'Table'[Item]
+                = EARLIER ( 'Table'[Item] )
+                && 'Table'[IncidentDate]
+                    < EARLIER ( 'Table'[IncidentDate] ) --   &&  VALUE('Table'[ServiceItemDescription]) =_Item
+        ),
+        'Table'[No. of JC for the same Item for the same car], DESC
+    )
+VAR RESULT_All_ItemS =
+    DATEDIFF (
+        MAXX (
+            TablePerCar,
+            'Table'[IncidentDate]
+        ),
+        'Table'[IncidentDate],
+        DAY
+    )
+RETURN
+    RESULT_All_ItemS
