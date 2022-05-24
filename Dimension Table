@@ -12,3 +12,11 @@ SWITCH( True(),
 
 Return
 Result
+----------------------------------
+Count No of Sales transactions for each Produc.
+
+Cal Column in Product table.
+No of sales = 
+COUNTROWS(
+    RELATEDTABLE('Fact Sale')
+) 
