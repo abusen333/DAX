@@ -1,0 +1,16 @@
+//  SEARCH is always case-insensitive. FIND can be 10% faster than SEARCH just because it is case-sensitive
+SQL                                                      DAX
+
+Name LIKE 'SQLBI'                                    	Table[Name] = "SQLBI"
+
+Name LIKE 'SQLBI%'                                    LEFT( Table[Name], 5 ) = "SQLBI"
+
+Name LIKE '%SQLBI'                                    RIGHT( Table[Name], 5 ) = "SQLBI"
+
+Name LIKE '%SQLBI%'                                   CONTAINSSTRING( Table[Name], "SQLBI" )
+
+Name LIKE 'SQLBI%Methodology'                         LEFT( Table[Name], 5 ) = "SQLBI"&& RIGHT( Table[Name], 11 ) = "Methodology"
+ 
+Name LIKE 'SQLBI%Methodology%'                       LEFT( Table[Name], 5 ) = "SQLBI"&& CONTAINSSTRING( Table[Name], "Methodology" )
+
+Name LIKE '%SQLBI%Methodology%'                      CONTAINSSTRING( Table[Name], "SQLBI*Methodology" )
