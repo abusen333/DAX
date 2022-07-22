@@ -1,0 +1,12 @@
+Feature	Import	Direct Query
+Size	Up to 1 GB per dataset	No limitation
+Data Source support	Import data from Multiple sources	Data must come from a single Source
+Performance	High-performance query engine	Depends on how fast the network connectivity and data source is as queries are executed in real-time. Only metadata and schema structure are stored on the Data model
+Data Change in the underlying data	Not Reflected. Required to do a Manual refresh in Power BI Desktop and republish the report or Schedule Refresh	"Power BI caches the data for better performance. So, it is necessary to Refresh to ensure the latest data"
+Data storage in Power BI	"Since it is a cached mode, data is stored in the Power BI Service (cloud)"	Data will not be stored in the Power BI cloud service. Data resides on-premises
+Schedule Refresh	Maximum 8 schedules per day	Schedule often as every 15 mins
+DAX expressions	Supports all DAX functions	"Restricted to use complex DAX functions such as Time Intelligence functions. However, if there is a Date table available in the underlying source then it supports"
+Calculated Tables	Available	Not supported
+Quick Insights	Available	Not available
+Change Data Connectivity mode	Not possible to change Import to Direct Query	Possible to change Direct Query to Import
+Target Audience	Small and Medium Datasets	Large Datasets (Greater than 1 GB)
