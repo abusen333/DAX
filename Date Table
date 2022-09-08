@@ -1,10 +1,18 @@
 Date = 
 VAR START_DATE =
-           MIN(SERVICE_CONTRACTS[ContractStartDate])
+           MIN(
+MINX('ORDER SF','ORDER SF'[CreatedDate]),
+MINX(LEADS,LEADS[CreatedDate])
+)
 VAR FirstDateoftheYear =
     DATE( YEAR( START_DATE ), 1, 1 )
 VAR Finish_DATE =
-     MAX(SERVICE_SALES_LINES[IncidentDate])
+     MAX(
+    
+        maxX('ORDER SF','ORDER SF'[CreatedDate]),
+        maxX(LEADS,LEADS[CreatedDate])
+  
+     )
 VAR LastDateoftheYear =
     DATE( YEAR( Finish_DATE ), 12, 31 )
 VAR Result =
