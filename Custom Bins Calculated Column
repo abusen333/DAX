@@ -1,0 +1,18 @@
+Duration Bins =
+VAR _Duration =
+    DATEDIFF (
+        'Accident Details'[DATE_OF_INCIDENT],
+        TODAY (),
+        MONTH
+    )
+VAR _Result =
+    SWITCH (
+        TRUE (),
+        _Duration <= 2, "0-2Mnth",
+        _Duration <= 6, "3-6Mnth",
+        _Duration <= 12, "7-12Mnth",
+        _Duration <= 24, "More Than 1 Yrs",
+        "More Than 2 Yrs"
+    )
+RETURN
+    _Result
