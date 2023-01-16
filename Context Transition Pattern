@@ -1,0 +1,58 @@
+Cash Great than 55k @ receitp level = 
+VAR _Receipt_Number =
+    ADDCOLUMNS (
+        SUMMARIZE (
+            Table,
+            Table[Receipt Number]
+        ),
+        "Cash",
+            VAR _Amout =
+                CALCULATE (
+                    [Amout by Receipt],
+                    Table[Receipt Method Name] = "CASH"
+                )
+            RETURN
+                _Amout
+    )
+VAR T2 =
+    FILTER (
+        _Receipt_Number,
+        [Cash] > 55000
+    )
+VAR _Result = 
+    SUMX(
+        VALUES(
+        Table[Receipt Number]
+        ),
+        VAR _Cash = [Cash Amout]
+        VAR Result = if(_Cash > 55000 , _Cash)
+        Return
+        Result
+    )
+
+RETURN
+_Result
+###################################################################################
+EVALUATE
+VAR _Receipt_Number =
+    ADDCOLUMNS (
+        SUMMARIZE (
+            Table,
+            Table[Receipt Number]
+        ),
+        "Cash",
+            VAR _Amout =
+                CALCULATE (
+                    [Amout by Receipt],
+                    Table[Receipt Method Name] = "CASH"
+                )
+            RETURN
+                _Amout
+    )
+VAR T2 =
+    FILTER (
+        _Receipt_Number,
+        [Cash] > 55000
+    )
+RETURN
+    T2
