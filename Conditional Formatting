@@ -1,0 +1,14 @@
+VAR _Case1 = SELECTEDVALUE(Table[Col]) = "Val"
+VAR _Case2 = AND(
+     [Cash Amount] >= 55000 , SELECTEDVALUE(tabl[Col]) <> "value"
+)
+VAR _Red = "hsla(0, 100%, 47%, 0.53)"
+VAR _Green = "hsla(105, 100%, 54%, 0.74)"
+VAR Result = SWITCH(
+    TRUE(),
+    _Case1 ,_Red,
+    _Case2 ,_Red,
+ _Green
+)
+Return
+Result
