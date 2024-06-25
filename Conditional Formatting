@@ -12,3 +12,36 @@ VAR Result = SWITCH(
 )
 Return
 Result
+
+
+######################
+Format numbers 
+Cash Amount(AED) = 
+VAR Amount = [Cash__Amount]
+VAR AmountInK = Amount / 1000
+VAR AmountInM = Amount / 1000000
+VAR AmountInB = Amount / 1000000000
+RETURN
+    SWITCH(
+        TRUE(),
+        Amount >= 1000000000,
+            IF(
+                ROUND(AmountInB, 1) = INT(AmountInB),
+                FORMAT(INT(AmountInB), "#,0") & " B",
+                FORMAT(AmountInB, "#,0.0") & " B"
+            ),
+        Amount >= 1000000,
+            IF(
+                ROUND(AmountInM, 1) = INT(AmountInM),
+                FORMAT(INT(AmountInM), "#,0") & " M",
+                FORMAT(AmountInM, "#,0.0") & " M"
+            ),
+        Amount >= 1000,
+            IF(
+                ROUND(AmountInK, 1) = INT(AmountInK),
+                FORMAT(INT(AmountInK), "#,0") & " K",
+                FORMAT(AmountInK, "#,0.0") & " K"
+            ),
+        FORMAT(Amount, "#,0")
+    )
+
