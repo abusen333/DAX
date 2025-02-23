@@ -1,18 +1,24 @@
 Date = 
 VAR START_DATE =
-           MIN(
-MINX('ORDER SF','ORDER SF'[CreatedDate]),
-MINX(LEADS,LEADS[CreatedDate])
-)
+MIN('Call-Center'[Date])
+
+//            MIN(
+// MINX('ORDER SF','ORDER SF'[CreatedDate]),
+// MINX(LEADS,LEADS[CreatedDate])
+// )
 VAR FirstDateoftheYear =
     DATE( YEAR( START_DATE ), 1, 1 )
+
+
+    // DATE(2021,2,1) -- Test 
 VAR Finish_DATE =
-     MAX(
+MIN('Call-Center'[Date])
+    //  MAX(
     
-        maxX('ORDER SF','ORDER SF'[CreatedDate]),
-        maxX(LEADS,LEADS[CreatedDate])
+    //     maxX('ORDER SF','ORDER SF'[CreatedDate]),
+    //     maxX(LEADS,LEADS[CreatedDate])
   
-     )
+    //  )
 VAR LastDateoftheYear =
     DATE( YEAR( Finish_DATE ), 12, 31 )
 VAR Result =
@@ -71,10 +77,40 @@ VAR Result =
                 "DD"
             ), */
         "WeekNum",
-            WEEKNUM(
+            WEEKDAY(
                 [Date],
-                1
-            ),
+                2
+            ),  
+             "Week Start Date",
+            [Date] -
+            WEEKDAY(
+                [Date],
+                2
+            ) + 1 ,
+
+               "Week End Date",
+            [Date] -
+            WEEKDAY(
+                [Date],
+                2
+            ) + 7 ,
+
+            
+               "Week Range",
+               FORMAT(
+                 [Date] -
+            WEEKDAY(
+                [Date],
+                2
+            ) + 1  , "DD/MM/YY"
+            
+            & "-" )&
+            FORMAT(
+            [Date] -
+            WEEKDAY(
+                [Date],
+                2
+            ) + 7 ,  "DD/MM/YY"),
 /*         "Day",
             FORMAT(
                 [Date],
@@ -84,22 +120,20 @@ VAR Result =
                     [Date],
                     "ddd"
                 ) & ")", */
-        "WorkingDays",
-            IF(
+        "Day Name",
                 FORMAT(
                     [Date],
-                    "dddd"
-                ) = "Friday",
-                0,
-                IF(
-                    FORMAT(
-                        [Date],
-                        "YYYYMMDD"
-                    ) = "20200101",
-                    0,
-                    1
-                )
-            )
+                    "ddd"
+                    ),
+              "Day Name Sort",
+                WEEKDAY(
+                    [Date],
+                    2
+                    )        
+               
+              
+                
+            
     )
 RETURN
     Result
