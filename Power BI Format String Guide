@@ -1,0 +1,162 @@
+# Power BI Format String Guide
+
+The Power BI FORMAT function uses the following syntax:
+```
+FORMAT(<value>, <format_string>)
+```
+
+This guide provides comprehensive format strings for different numeric formats in Power BI.
+
+## Table of Contents
+- [Basic Number Formats](#basic-number-formats)
+- [Decimal Places](#decimal-places)
+- [Thousands Separators](#thousands-separators)
+- [Percentage Formats](#percentage-formats)
+- [Currency Formats](#currency-formats)
+- [Scale Formats (K, M, B)](#scale-formats)
+- [Custom Combinations](#custom-combinations)
+- [Special Cases](#special-cases)
+
+## Basic Number Formats
+
+### General Number
+```
+FORMAT(1234.567, "#,0.00") → 1,234.57
+FORMAT(1234.567, "0.00") → 1234.57
+FORMAT(1234.567, "#") → 1235
+```
+
+### Fixed Decimal Places
+```
+FORMAT(1234.567, "0") → 1235
+FORMAT(1234.567, "0.0") → 1234.6
+FORMAT(1234.567, "0.00") → 1234.57
+FORMAT(1234.567, "0.000") → 1234.567
+```
+
+## Decimal Places
+
+### Optional Decimals (using #)
+```
+FORMAT(1234.567, "#.#") → 1234.6
+FORMAT(1234.500, "#.#") → 1234.5
+FORMAT(1234.000, "#.#") → 1234
+```
+
+### Fixed Decimals (using 0)
+```
+FORMAT(1234.567, "0.00") → 1234.57
+FORMAT(1234.500, "0.00") → 1234.50
+FORMAT(1234.000, "0.00") → 1234.00
+```
+
+## Thousands Separators
+
+### With Comma
+```
+FORMAT(1234567.89, "#,0") → 1,234,568
+FORMAT(1234567.89, "#,0.00") → 1,234,567.89
+FORMAT(1234567.89, "#,##0.00") → 1,234,567.89
+```
+
+## Percentage Formats
+
+### Basic Percentage
+```
+FORMAT(0.1234, "0%") → 12%
+FORMAT(0.1234, "0.0%") → 12.3%
+FORMAT(0.1234, "0.00%") → 12.34%
+```
+
+### Percentage with Thousands
+```
+FORMAT(12.3456, "#,##0.00%") → 1,234.56%
+FORMAT(12.3456, "#,0.00%") → 1,234.56%
+```
+
+## Scale Formats (K, M, B)
+
+### Thousands (K)
+```
+FORMAT(1234, "#,0,\"K\"") → 1K
+FORMAT(1234, "#,0.0,\"K\"") → 1.2K
+FORMAT(1234, "#,0.00,\"K\"") → 1.23K
+```
+
+### Millions (M)
+```
+FORMAT(1234567, "#,0,,\"M\"") → 1M
+FORMAT(1234567, "#,0.0,,\"M\"") → 1.2M
+FORMAT(1234567, "#,0.00,,\"M\"") → 1.23M
+```
+
+### Billions (B)
+```
+FORMAT(1234567890, "#,0,,,\"B\"") → 1B
+FORMAT(1234567890, "#,0.0,,,\"B\"") → 1.2B
+FORMAT(1234567890, "#,0.00,,,\"B\"") → 1.23B
+```
+
+## Custom Combinations
+
+### Combining Scale and Decimals
+```
+FORMAT(1234567.89, "#,##0.00,,\"M\"") → 1.23M
+FORMAT(1234567890.12, "#,##0.00,,,\"B\"") → 1.23B
+```
+
+### Negative Numbers
+```
+FORMAT(-1234.567, "#,##0.00") → -1,234.57
+FORMAT(-1234.567, "(#,##0.00)") → (1,234.57)
+FORMAT(-1234.567, "#,##0.00;(#,##0.00)") → (1,234.57)
+```
+
+## Special Cases
+
+### Zero Values
+```
+FORMAT(0, "#,##0.00") → 0.00
+FORMAT(0, "#,##0.00;(#,##0.00);\"Zero\"") → Zero
+```
+
+### Conditional Formatting
+```
+FORMAT(value, "#,##0.00;(#,##0.00);\"Zero\";\"@\"")
+// Positive numbers use first format
+// Negative numbers use second format
+// Zero uses third format
+// Text uses fourth format
+```
+
+## Best Practices
+
+1. Always use consistent formatting within the same visual or report
+2. Consider your audience when choosing decimal precision
+3. Use scale suffixes (K, M, B) for large numbers to improve readability
+4. Include thousand separators for numbers over 999 to improve readability
+5. Match the format to the data type (percentages for ratios, currency for monetary values)
+
+## Common Use Cases
+
+### Financial Reports
+```
+FORMAT(value, "#,##0.00") // Standard financial format
+FORMAT(value, "$#,##0.00") // Currency format
+FORMAT(value, "#,##0.00%") // Percentage format
+```
+
+### Dashboard KPIs
+```
+FORMAT(value, "#,0,\"K\"") // Thousands
+FORMAT(value, "#,0.0,,\"M\"") // Millions with one decimal
+FORMAT(value, "#,0.00%") // Percentages with two decimals
+```
+
+### Scientific/Technical Data
+```
+FORMAT(value, "0.000") // Three decimal places
+FORMAT(value, "0.00E+00") // Scientific notation
+```
+
+Remember that the format string is case-sensitive and spacing matters. Always test your format strings with different values, including edge cases like zero, negative numbers, and very large or small numbers.
