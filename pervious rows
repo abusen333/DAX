@@ -1,0 +1,23 @@
+OutOfOrderFrom =
+VAR CurrentID = Table1[ID]
+VAR CurrentExpectedOrder = Table1[ExpectedOrder]
+VAR CurrentActualDateTime = Table1[ActualDateTime]
+VAR ViolatingRow =
+    CALCULATETABLE (
+        TOPN (
+            1,
+            FILTER (
+                Table1,
+                Table1[ID] = CurrentID &&
+                Table1[ExpectedOrder] < CurrentExpectedOrder &&
+                Table1[ActualDateTime] > CurrentActualDateTime
+            ),
+            Table1[ActualDateTime], ASC
+        )
+    )
+RETURN
+IF (
+    COUNTROWS(ViolatingRow) > 0,
+    MAXX(ViolatingRow, Table1[Event]),
+    BLANK()
+)
