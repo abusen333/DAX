@@ -53,3 +53,54 @@ IF (
     ),
     BLANK()
 )
+
+
+Reversed from(tanfeeth Only) = 
+VAR CurrentAppID = data[app_id]
+VAR CurrentStage = data[tanfeeth_stage]
+VAR CurrentExpectedOrder = data[tanfeeth_stage_order]
+VAR CurrentActualTime = data[step_start_date_time]
+
+-- Find the latest valid stage that should come before this one
+VAR LatestPriorValid = 
+    CALCULATE (
+        MAX ( data[step_start_date_time] ),
+        FILTER (
+            data,
+            data[app_id] = CurrentAppID
+                && data[tanfeeth_stage_order] < CurrentExpectedOrder
+        )
+    )
+
+-- Find next stage with the same name if this is a reversal to the same stage
+VAR NextSameStage =
+    CALCULATE (
+        MIN ( data[step_start_date_time] ),
+        FILTER (
+            data,
+            data[app_id] = CurrentAppID
+                && data[tanfeeth_stage] = CurrentStage
+                && data[step_start_date_time] > CurrentActualTime
+        )
+    )
+
+RETURN
+IF (
+    CurrentActualTime <= LatestPriorValid,
+    -- This is out of order, find what it should reverse to
+    CALCULATE (
+        MIN ( data[tanfeeth_stage] ),
+        FILTER (
+            data,
+            data[app_id] = CurrentAppID
+                && data[tanfeeth_stage_order] < CurrentExpectedOrder
+                && data[step_start_date_time] = LatestPriorValid
+        )
+    ),
+    -- If this is a repeated stage, check if there's a next occurrence
+    IF (
+        NOT ISBLANK(NextSameStage),
+        CurrentStage & " (Repeated)",
+        BLANK()
+    )
+)
