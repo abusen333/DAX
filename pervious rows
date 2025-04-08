@@ -21,3 +21,35 @@ IF (
     MAXX(ViolatingRow, Table1[Event]),
     BLANK()
 )
+
+OutOfOrderFrom =
+VAR CurrentID = Table1[ID]
+VAR CurrentExpectedOrder = Table1[ExpectedOrder]
+VAR CurrentActualDateTime = Table1[ActualDateTime]
+
+-- Get the latest valid datetime of a lower-order event
+VAR LatestPriorValid =
+    CALCULATE (
+        MAX (Table1[ActualDateTime]),
+        FILTER (
+            Table1,
+            Table1[ID] = CurrentID &&
+            Table1[ExpectedOrder] < CurrentExpectedOrder
+        )
+    )
+
+-- Is this row before that latest valid row? Then it's out of order.
+RETURN
+IF (
+    CurrentActualDateTime < LatestPriorValid,
+    CALCULATE (
+        MAX (Table1[Event]),
+        FILTER (
+            Table1,
+            Table1[ID] = CurrentID &&
+            Table1[ExpectedOrder] < CurrentExpectedOrder &&
+            Table1[ActualDateTime] = LatestPriorValid
+        )
+    ),
+    BLANK()
+)
