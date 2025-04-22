@@ -1,0 +1,17 @@
+# Data Analysis Workflow Step Descriptions
+
+| Stage | Category | Step | Description |
+|-------|----------|------|-------------|
+| **Requirement Assessment** | Assessment | Handover/Assess the requirement and analyze | Receive and review the initial requirements from stakeholders. Analyze what data is needed, what questions need to be answered, and what the expected outcomes are. |
+| **Requirement Assessment** | Get the data | Either from Solutions | Request and obtain the necessary data from the Solutions team/department. Ensure all required access permissions are in place. |
+| **Requirement Assessment** | Get the data | Either from Reporting | Request and obtain the necessary data from the Reporting team/department. Identify specific reports that contain the required data. |
+| **Requirement Assessment** | Get the data | Or Generate your own dataset | Create a custom dataset when existing data sources are insufficient. Define parameters and methods for generating representative data. |
+| **Development** | Explore the dataset | Check if all required columns are available | Verify that the dataset contains all necessary columns/fields required for the analysis. Identify any missing data elements. |
+| **Development** | Explore the dataset | Apply necessary filters | Apply filters to the dataset to focus on relevant data segments and remove irrelevant or outlier data. |
+| **Development** | Execute the analysis | Prepare necessary views of the data on which the analysis needs to be made | Create specific data views that highlight patterns, trends, or relationships necessary for the analysis. |
+| **Development** | Execute the analysis | Prepare the necessary outputs of the data for the Presentation | Transform analysis results into presentation-ready formats such as charts, tables, or summary statistics. |
+| **Development** | Execute the analysis | Testing | Validate the analysis results through testing to ensure accuracy and reliability of findings. |
+| **Testing** | PO alignment and Demo | PO Playback/Validation/Demo | Present initial findings to the Product Owner for validation and feedback. Ensure the analysis meets business requirements. |
+| **Refinement** | Apply necessary refinements | Apply necessary refinements | Make adjustments to the analysis based on feedback from the PO and stakeholders. Refine methodologies or presentations as needed. |
+| **Output** | Preparing the Presentations | Preparing the Presentations | Create final presentation materials that effectively communicate findings, insights, and recommendations to the target audience. |
+| **Delivery** | Stakeholder Demo | Stakeholder Demo | Present the final analysis results to all stakeholders. Address questions and gather final feedback. |
